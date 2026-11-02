@@ -12,15 +12,16 @@ cask "notchuser" do
     strategy :github_latest
   end
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "NotchUser.app"
   binary "#{appdir}/NotchUser.app/Contents/Resources/notch"
 
   # The app is open source but not notarized, so Gatekeeper would refuse to open it.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/NotchUser.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", "#{appdir}/NotchUser.app"],
+        writable_paths: ["#{appdir}/NotchUser.app"]
   end
 
   uninstall quit: "io.github.notchuser"
