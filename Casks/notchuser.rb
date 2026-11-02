@@ -1,0 +1,39 @@
+cask "notchuser" do
+  version "1.7.0"
+  sha256 "ccd653dc0f1250b5a5e17e782e0fe8807ae4d8f93e341bfbf1ca9a67dcc2d1e4"
+
+  url "https://github.com/Magnumja/NotchUser/releases/download/v#{version}/NotchUser.zip"
+  name "NotchUser"
+  desc "Dynamic Island for the MacBook notch: music, lyrics, file shelf and AI agents"
+  homepage "https://github.com/Magnumja/NotchUser"
+
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
+  depends_on macos: ">= :sonoma"
+
+  app "NotchUser.app"
+  binary "#{appdir}/NotchUser.app/Contents/Resources/notch"
+
+  # The app is open source but not notarized, so Gatekeeper would refuse to open it.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/NotchUser.app"]
+  end
+
+  uninstall quit: "io.github.notchuser"
+
+  zap trash: [
+    "~/Library/Application Support/NotchUser",
+    "~/Library/Caches/NotchUser",
+    "~/Library/Preferences/io.github.notchuser.plist",
+  ]
+
+  caveats <<~EOS
+    NotchUser isn't notarized by Apple, so this cask removes the download
+    quarantine flag to let it open. The source is at:
+      https://github.com/Magnumja/NotchUser
+  EOS
+end
