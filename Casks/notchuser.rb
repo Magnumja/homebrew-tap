@@ -20,8 +20,8 @@ cask "notchuser" do
   # The app is open source but not notarized, so Gatekeeper would refuse to open it.
   postflight_steps do
     run "/usr/bin/xattr",
-        args:           ["-dr", "com.apple.quarantine", "#{appdir}/NotchUser.app"],
-        writable_paths: ["#{appdir}/NotchUser.app"]
+        args:           ["-dr", "com.apple.quarantine", "{{appdir}}/NotchUser.app"],
+        writable_paths: ["{{appdir}}/NotchUser.app"]
   end
 
   uninstall quit: "io.github.notchuser"
