@@ -1,6 +1,6 @@
 cask "notchuser" do
-  version "1.10.0"
-  sha256 "5398319cb4030e00cc105a7bdc5cee3e86976d382f9511942798bed24420402d"
+  version "1.10.1"
+  sha256 "ac9f971db82d7b54d3ea919057b58d8e7cca3dea82ca1347fcc3f889f89ed500"
 
   url "https://github.com/Magnumja/NotchUser/releases/download/v#{version}/NotchUser.zip"
   name "NotchUser"
